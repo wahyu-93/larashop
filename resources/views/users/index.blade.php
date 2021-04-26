@@ -5,6 +5,58 @@
 @endsection
 
 @section('content')
+    <h2>User List</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form action="{{route('users.index')}}">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input
+                            value="{{Request::get('keyword')}}"
+                            name="keyword"
+                            class="form-control"
+                            type="text"
+                            placeholder="Masukan email untuk filter..."/>
+                    </div>
+
+                    <div class="col-md-6">
+                        <input {{Request::get('status') == 'ACTIVE'? 'checked' :''}} 
+                            value="ACTIVE"
+                            name="status"
+                            type="radio"
+                            class="form-control"
+                            id="active">
+                        <label for="active">Active</label>
+                   
+                        <input {{Request::get('status') == 'INACTIVE'? 'checked' :''}} 
+                            value="INACTIVE"
+                            name="status"
+                            type="radio"
+                            class="form-control"
+                            id="inactive">
+                        <label for="inactive">Inactive</label>
+                       
+                        <input
+                            type="submit"
+                            value="Filter" 
+                            class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div><br>
+
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a 
+                href="{{ route('users.create') }}"
+                class="btn btn-primary ">
+            Create User
+            </a>
+        </div>
+    </div><br>
+
     @if(session('status'))
         <div class="alert alert-success">
             {{ session('status') }}
@@ -18,6 +70,7 @@
                 <th><b>Username</b></th>
                 <th><b>Email</b></th>
                 <th><b>Avatar</b></th>
+                <th><b>Status</b></th>
                 <th><b>Action</b></th>
             </tr>
         </thead>
@@ -35,6 +88,13 @@
                                 width="70px"/> 
                         @else
                             N/A
+                        @endif
+                    </td>
+                    <td>
+                        @if($user->status=="ACTIVE")
+                            <span class="badge badge-success">Active</span>
+                        @else
+                            <span class="badge badge-danger">Inactive</span>
                         @endif
                     </td>
                     <td>
@@ -66,5 +126,13 @@
                 </tr>
             @endforeach
         </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="10">
+                    {{ $users->appends(Request::all())->links() }}
+                </td>
+            </tr>
+        </tfoot>
         </table>
 @endsection
