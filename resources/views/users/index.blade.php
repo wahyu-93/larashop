@@ -39,7 +39,7 @@
                     </td>
                     <td>
                         <a 
-                            class="btn-info text-white btn-sm"
+                            class="btn btn-info text-white btn-sm"
                             href="{{ route('users.edit', ['id' => $user->id]) }}">
                             Edit
                         </a>
@@ -52,9 +52,15 @@
                             @csrf
                             @method('DELETE')
 
-                            <input type="submit" value="delete" class="bnt btn-danger btn-sm">
+                            <input type="submit" value="delete" class="btn btn-danger btn-sm">
 
                         </form>
+                        &nbsp;
+                        <a
+                            class="btn btn-primary btn-sm"
+                            href="{{ route('users.show', ['id' => $user->id]) }}">
+                        Detail
+                        </a>
                     </td>
 
                 </tr>
