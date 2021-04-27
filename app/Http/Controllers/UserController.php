@@ -16,26 +16,26 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::paginate(1);
+        $users = User::paginate(10);
 
         $filterKeyword = $request->get('keyword');
         $status        = $request->get('status');
 
         if($status){
-            $users = User::where('status', $status)->paginate(1);
+            $users = User::where('status', $status)->paginate(10);
         }
         else{
-            $users = User::paginate(1);
+            $users = User::paginate(10);
         };
 
         if($filterKeyword){
             if($status){
                 $users = User::where('email', 'LIKE', "%$filterKeyword%")
                     ->where('status', $status)    
-                    ->paginate(1);
+                    ->paginate(10);
             }
             else {
-                $users = User::where('email', 'LIKE', "%$filterKeyword%")->paginate(1);
+                $users = User::where('email', 'LIKE', "%$filterKeyword%")->paginate(10);
             };
         };
 
