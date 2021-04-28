@@ -164,7 +164,14 @@ class CategoryController extends Controller
         };
 
         return redirect()->route('categories.index')->with('status', 'cCategory permanent;y deleted');
+    }
 
+    public function ajaxSearch(Request $request)
+    {
+        $keyword = $request->get('q');
 
+        $categories = Category::where('name', 'LIKE', '%'.$keyword.'%')->get();
+        dd($categories);
+        return $categories;
     }
 }

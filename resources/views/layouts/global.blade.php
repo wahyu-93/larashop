@@ -98,6 +98,7 @@
                         <li><a href="/home"><span class="oi oi-home"></span>Home</a></li>
                         <li><a href="/users"><span class="oi oi-people"></span>Manage Users</a></li>
                         <li><a href="/categories"><span class="oi oi-tag"></span>Manage Categories</a></li>
+                        <li><a href="/books"><span class="oi oi-book"></span>Manage Books</a></li>
 
                         <div class="d-block d-md-none">
                             <div class="dropdown-divider"></div>
@@ -147,5 +148,7 @@
             integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
             crossorigin="anonymous">
         </script>
+
+        @yield('footer-scripts')
     </body>
 </html>
