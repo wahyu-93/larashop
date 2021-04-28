@@ -120,12 +120,51 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        if($category->image && file_exists(storage_path('app/public/'. $category->image)))(
-            Storage::delete('public/'.$category->image)
-        );
+        // if($category->image && file_exists(storage_path('app/public/'. $category->image)))(
+        //     Storage::delete('public/'.$category->image)
+        // );
 
         $category->delete();
-        return redirect()->route('categories.index')->with('status', 'Category successfully deleted');
+        return redirect()->route('categories.index')->with('status', 'Category successfully move to trush');
+    }
+
+    public function trash()
+    {
+        $categories = Category::onlyTrashed()->paginate(10);
+        return view('categories.trash', compact('categories'));
+    }
+
+    public function restore($id)
+    {
+        $categories = Category::withTrashed()->findOrfail($id);
+
+        if($categories){
+            $categories->restore();
+        }
+        else {
+            return redirect()->route('categories.index')->with('status', 'Category in not in trash');
+        };
+
+        return redirect()->route('categories.index')->with('status', 'Category successfully restored');
+    }
+
+    public function deletePermanent($id)
+    {
+        $category = Category::withTrashed()->findOrfail($id);
+
+        if($category->trashed()){
+            if($category->image && file_exists(storage_path('app/public/'. $category->image)))(
+                Storage::delete('public/'.$category->image)
+            );
+            
+            $category->forceDelete();
+        }
+        else{
+            return redirect()->route('categories.index')->with('status', 'Can not delete permanent active category');
+        };
+
+        return redirect()->route('categories.index')->with('status', 'cCategory permanent;y deleted');
+
 
     }
 }

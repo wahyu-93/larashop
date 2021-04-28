@@ -25,3 +25,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('users', 'UserController');
 Route::resource('categories', 'CategoryController');
+Route::get('/categories/trash/list', 'CategoryController@trash')->name('categories.trash');
+Route::get('/categories/{id}/restore', 'CategoryController@restore')->name('categories.restore');
+Route::delete('/categories/{id}/delete-permanenet', 'CategoryController@deletePermanent')->name('categories.delete-permanent');

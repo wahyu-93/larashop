@@ -1,11 +1,11 @@
 @extends('layouts.global')
 
 @section('title')
-    Category List
+    Trashed Categories
 @endsection
 
 @section('content')
-    <h2>Category List</h2>
+    <h2>Trashed Categories</h2>
 
     <div class="row">
         <div class="col-md-4">
@@ -31,7 +31,7 @@
             <ul class="nav nav-pills card-header-pills">
                 <li class="nav-item">
                     <a 
-                        class="nav-link active" 
+                        class="nav-link" 
                         href="{{ route('categories.index') }}">Published
                     </a>
                 </li>
@@ -39,7 +39,7 @@
                 
                 <li class="nav-item">
                     <a
-                        class="nav-link"
+                        class="nav-link active"
                         href="{{ route('categories.trash') }}">Trash
                     </a>
                 </li>
@@ -89,29 +89,25 @@
                         @endif
                     </td>
                     <td>
-                        <a 
-                            class="btn btn-info text-white btn-sm"
-                            href="{{ route('categories.edit', ['id' => $categori->id]) }}">
-                            Edit
+                        <a
+                            class="btn btn-success btn-sm"
+                            href="{{ route('categories.restore', ['id' => $categori->id]) }}">
+                            Restore
                         </a>
-                        &nbsp;
-                        <form
-                            onsubmit="return confirm('move Category to trash ?')"
+                        
+                        <form 
+                            action="{{ route('categories.delete-permanent',['id' => $categori->id]) }}" 
+                            method="POST" 
                             class="d-inline"
-                            action="{{ route('categories.destroy', ['id' => $categori->id]) }}"
-                            method="POST">
+                            onsubmit="return confirm('Category delete permanent ?')">
                             @csrf
                             @method('DELETE')
 
-                            <input type="submit" value="delete" class="btn btn-danger btn-sm">
-
+                            <input
+                                type="submit"
+                                class="btn btn-danger btn-sm"
+                                value="Delete">
                         </form>
-                        &nbsp;
-                        <a
-                            class="btn btn-primary btn-sm"
-                            href="{{ route('categories.show', ['id' => $categori->id]) }}">
-                        Detail
-                        </a>
                     </td>
 
                 </tr>
