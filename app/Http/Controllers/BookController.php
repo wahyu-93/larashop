@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Book;
 use Auth;
@@ -87,7 +88,8 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Book::findOrfail($id);
+        return view('books.edit', compact('book'));
     }
 
     /**
@@ -99,7 +101,33 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $book = Book::findOrfail($id);
+
+        $book->title        = $request->get('title');
+        $book->slug         = $request->get('slug' );
+        $book->description  = $request->get('description');
+        $book->author       = $request->get('author');
+        $book->publisher    = $request->get('publisher');
+        $book->price        = $request->get('price');
+        $book->stock        = $request->get('stock');
+        $book->status       = $request->get('status');
+
+        $cover = $request->file('cover');
+        if($cover){
+            if($book->cover && file_exists(storage_path('app/public'.$book->cover))){
+                Storage::delete('public/'.$book->cover);
+            };            
+
+            $file = $cover->store('book-covers', 'public');
+            $book->cover = $file;
+        }
+
+        $book->updated_by   = Auth::user()->id;
+        $book->save();
+
+        $book->categories()->sync($request->get('categories'));
+
+        return redirect()->route('books.edit', ['id' => $book->id])->with('status', 'Book Successfully updated');
     }
 
     /**
