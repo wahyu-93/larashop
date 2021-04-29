@@ -171,7 +171,7 @@ class CategoryController extends Controller
         $keyword = $request->get('q');
 
         $categories = Category::where('name', 'LIKE', '%'.$keyword.'%')->get();
-        dd($categories);
+    
         return $categories;
     }
 }

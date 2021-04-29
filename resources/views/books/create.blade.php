@@ -109,14 +109,13 @@
         $('#categories').select2({
             ajax : {
                 url : '/ajax/categories/search',
-                processResults :  function(data){
+                processResults : function(data){
                     return {
                         results: data.map(function(item){
-                            console.log(item)
                             return {
-                                        id: item.id,
-                                        text: item.name
-                                    }
+                                id: item.id,
+                                text: item.name
+                            }
                         })
                     }
                 }

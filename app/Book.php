@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-    public function Categories()
+    public function categories()
     {
         return $this->belongsToMany('App\Category');
     }

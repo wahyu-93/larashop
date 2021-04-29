@@ -15,7 +15,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        // with('categories') itu meurujuk pada function relasi di model book
+        $books = Book::with('categories')->paginate(10);
+        return view('books.index', compact('books'));
     }
 
     /**
@@ -55,6 +57,8 @@ class BookController extends Controller
         $book->slug         = str_slug($request->get('title'), '-');
         $book->created_by   = Auth::user()->id;
         $book->save();
+
+        $book->categories()->attach($request->get('categories'));
 
         if($request->get('save_action')=="PUBLISH"){
             return redirect()->route('books.create')->with('status', 'Book successfully saved and publisher');
