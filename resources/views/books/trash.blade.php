@@ -44,15 +44,7 @@
                     </ul>
                 </div>
             </div>
-
-            <div class="mb-3">
-                <div class="col-md-12 text-right">
-                    <a 
-                        href="{{ route('books.create') }}"
-                        class="btn btn-primary">Create Book
-                    </a>
-                </div>
-            </div>
+            <br>
 
             @if(session('status'))
                 <div class="alert alert-success">
@@ -66,7 +58,6 @@
                         <th><b>Cover</b></th>
                         <th><b>Title</b></th>
                         <th><b>Author</b></th>
-                        <th><b>Status</b></th>
                         <th><b>Categories</b></th>
                         <th><b>Stock</b></th>
                         <th><b>Price</b></th>
@@ -87,14 +78,7 @@
     
                             <td>{{ $book->title }}</td>
                             <td>{{ $book->author }}</td>
-                            <td>
-                                @if($book->status == "DRAFT")
-                                    <span class="badge badge-dark text-white">{{ $book->status }}
-                                @else
-                                    <span class="badge badge-success text-white">{{ $book->status }}
-                                @endif
-                            </td>
-    
+                               
                             <td>
                                 <ul class="pl-3">
                                     @foreach($book->categories as $category)
@@ -106,25 +90,7 @@
                             <td>{{ $book->stock }}</td>
                             <td>{{ $book->price }}</td>
                             <td>
-                                <a
-                                    href="{{ route('books.edit',['id' => $book->id]) }}"
-                                    class="btn btn-info btn-sm">Edit
-                                </a>
-
-                                <form 
-                                    action="{{ route('books.destroy', ['id' => $book->id]) }}" 
-                                    method="POST" 
-                                    class="d-inline"
-                                    onsubmit="return confirm('Move to trash ?')">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <input 
-                                        type="submit"
-                                        class="btn btn-danger btn-sm"
-                                        value="Trash">
-                                </form>
-
+                               TODO
                             </td>
                         </tr>
                     @endforeach
