@@ -19,12 +19,19 @@ class BookController extends Controller
         // with('categories') itu meurujuk pada function relasi di model book
         // $books = Book::with('categories')->paginate(10);
 
-        $status = $request->get('status');
+        $status  = $request->get('status');
+        $keyword = $request->get('keyword') ? $request->get('keyword') : '' ;
+
         if($status){
-            $books = Book::with('categories')->where('status', strtoupper('status'))->paginate(10);
+            $books = Book::with('categories')
+                ->where('title', 'LIKE', '%'.$keyword.'%')
+                ->where('status', strtoupper($status))
+                ->paginate(10);
         }
         else{
-            $books = Book::with('categories')->paginate(10);
+            $books = Book::with('categories')
+                ->where('title', 'LIKE', '%'.$keyword.'%')
+                ->paginate(10);
         };
 
         return view('books.index', compact('books'));
