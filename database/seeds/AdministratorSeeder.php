@@ -25,5 +25,18 @@ class AdministratorSeeder extends Seeder
         $administrator->save();
 
         $this->command->info("User Admin berhasil diinsert");
+
+        $user = new User;
+        $user->username = "user";
+        $user->name     = "user";
+        $user->email    = "user@larashop.test";
+        $user->roles    = json_encode(["ADMIN"]);
+        $user->password = Hash::make("user");
+        $user->avatar   = "saat-ini-tidak-ada-file.png";
+        $user->address  = "Sarmil, bintari, tangerang selatan";
+        $user->phone    = "082353089050";
+        $user->save();
+
+        $this->command->info("User berhasil diinsert");
     }
 }

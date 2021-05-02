@@ -20,7 +20,7 @@ class CreateBooksTable extends Migration
             $table->text('description');
             $table->string('author');
             $table->string('publisher');
-            $table->string('cover');
+            $table->string('cover')->nullable();
             $table->float('price');
             $table->integer('views')->default(0)->unsigned();
             $table->integer('stock')->default(0)->unsigned();
